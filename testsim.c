@@ -113,7 +113,8 @@ void performTask(stateType *statePtr)
         }
         else if (BEQ == opcode)
         {
-            beqOp(statePtr->mem[i], statePtr, i);
+            i = beqOp(statePtr->mem[i], statePtr, i);
+            printf("\npc : %d\n",i);
             statePtr->pc = i ;
             printState(statePtr);
         }
@@ -196,11 +197,12 @@ int beqOp(int instruction, stateType *stateType, int pc){
     int regB = getBytes(&extractOpcode, 16);
     printf("\nregB %d \n", regB);
 
+    printf("\extractOpcode %d \n", extractOpcode);
     int offsetField = convertNum(extractOpcode);;
     printf("\noffsetField %d \n", offsetField);
 
     if(stateType->reg[regA] == stateType->reg[regB]){
-        return pc+offsetField;
+        return pc+offsetField+1;
     } else{
         return pc;
     }
