@@ -123,17 +123,11 @@ void performTask(stateType *statePtr)
         }
         else if (BEQ == opcode)
         {
-            //statePtr->pc = i + 1;
+            
             printState(statePtr);
-          //  i = 
-           // printf("\nFUcking 2 I : %d and pc : %d", i, statePtr->pc);
-            i= beqOp(statePtr->mem[i], statePtr, i);
-            //i = statePtr->pc;
-            //printf("\nFUcking I : %d and pc : %d", i, statePtr->pc);
-           // char str [99];
-          // scanf( "%s",str );
-           // printf("\npc : %d\n",i);
-            //statePtr->pc = i ;
+         i= beqOp(statePtr->mem[i], statePtr, i);
+           
+            
         }
         else if (JALR == opcode)
         {
@@ -241,21 +235,13 @@ int beqOp(int instruction, stateType *stateType, int pc){
     int offsetField = convertNum(extractOpcode);;
     printf("\noffsetField %d \n", offsetField);
 
-    //stateType->pc = stateType->pc+1+offsetField;
-
     if(stateType->reg[regA] == stateType->reg[regB]){
-        printf("\extractOpcode %d \n", extractOpcode);
-    int offsetField = convertNum(extractOpcode);;
-    printf("\noffsetField %d \n", offsetField);
-
-        printf("\nNew Pc BEQ %d",pc+1+offsetField);
+        
        return stateType->pc+offsetField;
 
     } else{
         return pc;
-       // stateType->pc = pc;
-        //return pc;
-        //return pc+offsetField;
+       
     }
 
 }
