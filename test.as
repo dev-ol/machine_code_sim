@@ -1,10 +1,9 @@
-        lw    0     1     five
-        lw    1     2     3
-start   add   1     2     1
-        beq   0     1     2
-        beq   0     0     start
-        noop
-done    halt
-five    .fill 5
+        lw 0 1 five
+        lw 0 2 x
+        jalr 1 2
+done    halt 
+        lw 0 5 y
+five    .fill 3
 neg1    .fill -1
-stAddr  .fill start 
+x       .fill 1
+y       .fill 7

@@ -34,7 +34,7 @@ void lwOp(int instruction, stateType *stateType);
 void swOp(int instruction, stateType *stateType);
 int beqOp(int instruction, stateType *stateType, int pc);
 void clearRegisters(stateType *statePtr);
-
+int jalrOp(int instruction, stateType *stateType);
 
 int main(int argc, char *argv[])
 {
@@ -69,7 +69,7 @@ int main(int argc, char *argv[])
         printf("memory[%d]=%d\n", state.numMemory, state.mem[state.numMemory]);
     }
 
-   // printState(&state);
+    // printState(&state);
     performTask(&state);
 
     return (0);
@@ -77,7 +77,7 @@ int main(int argc, char *argv[])
 
 void performTask(stateType *statePtr)
 {
-    
+
     printf("*****testttingggg : performTask******\n");
     int i;
     int count = 0;
@@ -94,12 +94,12 @@ void performTask(stateType *statePtr)
             //statePtr->pc = i + 1;
             printState(statePtr);
             printf("\nbreak\n");
-            statePtr->pc ++;
+            statePtr->pc++;
             break;
         }
         else if (ADD == opcode)
         {
-           // statePtr->pc = i + 1;
+            // statePtr->pc = i + 1;
             printState(statePtr);
             addOp(statePtr->mem[i], statePtr);
         }
@@ -111,34 +111,30 @@ void performTask(stateType *statePtr)
         }
         else if (LW == opcode)
         {
-           // statePtr->pc = i + 1;
+            // statePtr->pc = i + 1;
             printState(statePtr);
             lwOp(statePtr->mem[i], statePtr);
         }
         else if (SW == opcode)
         {
-           // statePtr->pc = i + 1;
+            // statePtr->pc = i + 1;
             printState(statePtr);
             swOp(statePtr->mem[i], statePtr);
         }
         else if (BEQ == opcode)
         {
-            
+
             printState(statePtr);
-         i= beqOp(statePtr->mem[i], statePtr, i);
-           
-            
+            i = beqOp(statePtr->mem[i], statePtr, i);
         }
         else if (JALR == opcode)
         {
+            printState(statePtr);
+            i = jalrOp(statePtr->mem[i], statePtr);
         }
         else if (NOOP == opcode)
         {
-           // printState(statePtr);
-            //statePtr->pc = i + 1;
         }
-
-        
     }
 
     printf("machine halted \ntotal of %d instructions executed final state of machine:", count);
@@ -174,12 +170,10 @@ void addOp(int instruction, stateType *stateType)
     stateType->reg[regA] = stateType->reg[desgReg] + stateType->reg[regB];
 }
 
-
 void nandOp(int instruction, stateType *stateType)
 {
-    printf("\nNand %d\n", ~(25& 9));
 
-     printf("\nNAND\n");
+    printf("\nNAND\n");
     int extractOpcode = instruction - (NAND << 22);
     printf("\nexyracr %d \n", extractOpcode);
 
@@ -193,11 +187,33 @@ void nandOp(int instruction, stateType *stateType)
     printf("\ndesgReg %d \n", desgReg);
 
     stateType->reg[desgReg] = ~(stateType->reg[regA] & stateType->reg[regB]);
+}
+int jalrOp(int instruction, stateType *stateType)
+{
+   
+    printf("\nJALR\n");
+    int extractOpcode = instruction - (JALR << 22);
+    printf("\nexyracr %d \n", extractOpcode);
 
+    int regA = getBytes(&extractOpcode, 19);
+    printf("\nregA %d \n", regA);
+
+    int regB = getBytes(&extractOpcode, 16);
+    printf("\nregB %d \n", regB);
+
+    
+    stateType->reg[regB] = stateType->pc + 1;
+    return stateType->reg[regA];
+
+    // int desgReg = extractOpcode;
+    // printf("\ndesgReg %d \n", desgReg);
+
+    //stateType->reg[desgReg] = ~(stateType->reg[regA] & stateType->reg[regB]);
 }
 
-void lwOp(int instruction, stateType *stateType){
-printf("\nLW\n");
+void lwOp(int instruction, stateType *stateType)
+{
+    printf("\nLW\n");
     int extractOpcode = instruction - (LW << 22);
     printf("\nexyracr %d \n", extractOpcode);
 
@@ -207,7 +223,8 @@ printf("\nLW\n");
     int regB = getBytes(&extractOpcode, 16);
     printf("\nregB %d \n", regB);
 
-    int offsetField = convertNum(extractOpcode);;
+    int offsetField = convertNum(extractOpcode);
+    ;
     printf("\noffsetField %d \n", offsetField);
 
     offsetField = offsetField + stateType->reg[regA];
@@ -216,10 +233,10 @@ printf("\nLW\n");
     int _value = stateType->mem[offsetField];
 
     stateType->reg[regB] = _value;
-    
 }
 
-int beqOp(int instruction, stateType *stateType, int pc){
+int beqOp(int instruction, stateType *stateType, int pc)
+{
     printf("\nBEQ\n");
 
     int extractOpcode = instruction - (BEQ << 22);
@@ -232,24 +249,24 @@ int beqOp(int instruction, stateType *stateType, int pc){
     printf("\nregB %d \n", regB);
 
     printf("\extractOpcode %d \n", extractOpcode);
-    int offsetField = convertNum(extractOpcode);;
+    int offsetField = convertNum(extractOpcode);
+    ;
     printf("\noffsetField %d \n", offsetField);
 
-    if(stateType->reg[regA] == stateType->reg[regB]){
-        
-       return stateType->pc+offsetField;
+    if (stateType->reg[regA] == stateType->reg[regB])
+    {
 
-    } else{
-        return pc;
-       
+        return stateType->pc + offsetField;
     }
-
+    else
+    {
+        return pc;
+    }
 }
 
-
-
-void swOp(int instruction, stateType *stateType){
-printf("\nSW\n");
+void swOp(int instruction, stateType *stateType)
+{
+    printf("\nSW\n");
     int extractOpcode = instruction - (SW << 22);
     printf("\nexyracr %d \n", extractOpcode);
 
@@ -259,17 +276,16 @@ printf("\nSW\n");
     int regB = getBytes(&extractOpcode, 16);
     printf("\nregB %d \n", regB);
 
-    int offsetField = convertNum(extractOpcode);;
+    int offsetField = convertNum(extractOpcode);
+    ;
     printf("\noffsetField  %d \n", offsetField);
 
     offsetField = offsetField + stateType->reg[regB];
     printf("\noffsetField reg %d \n", offsetField);
     printf("\n store reg value %d \n", stateType->reg[regA]);
 
-    stateType->reg[offsetField]  = stateType->reg[regA];
-    
+    stateType->reg[offsetField] = stateType->reg[regA];
 }
-
 
 //utilities
 int getBytes(int *instruction, int shiftAmount)
@@ -305,10 +321,12 @@ void printState(stateType *statePtr)
     printf("end state\n");
 }
 
-void clearRegisters(stateType *statePtr){
+void clearRegisters(stateType *statePtr)
+{
 
     int i;
-    for(i = 0; i < 8; i++){
+    for (i = 0; i < 8; i++)
+    {
         statePtr->reg[i] = 0;
     }
 }
