@@ -1,11 +1,10 @@
 memory[0]=8454149
-memory[1]=8519687
-memory[2]=21626880
-memory[3]=25165824
-memory[4]=8716295
-memory[5]=3
-memory[6]=-1
-memory[7]=1
+memory[1]=12648457
+memory[2]=8650761
+memory[3]=786436
+memory[4]=25165824
+memory[5]=10
+memory[6]=-5
 *****testttingggg : performTask******
 
 instruction : 8454149
@@ -16,13 +15,12 @@ state:
 	pc 0
 	memory:
 		mem[ 0 ] 8454149
-		mem[ 1 ] 8519687
-		mem[ 2 ] 21626880
-		mem[ 3 ] 25165824
-		mem[ 4 ] 8716295
-		mem[ 5 ] 3
-		mem[ 6 ] -1
-		mem[ 7 ] 1
+		mem[ 1 ] 12648457
+		mem[ 2 ] 8650761
+		mem[ 3 ] 786436
+		mem[ 4 ] 25165824
+		mem[ 5 ] 10
+		mem[ 6 ] -5
 	registers:
 		reg[ 0 ] 0
 		reg[ 1 ] 0
@@ -45,24 +43,65 @@ regB 1
 offsetField 5 
 ega value 0 
 
-instruction : 8519687
-Opcode : 2
+instruction : 12648457
+Opcode : 3
 
 @@@
 state:
 	pc 1
 	memory:
 		mem[ 0 ] 8454149
-		mem[ 1 ] 8519687
-		mem[ 2 ] 21626880
-		mem[ 3 ] 25165824
-		mem[ 4 ] 8716295
-		mem[ 5 ] 3
-		mem[ 6 ] -1
-		mem[ 7 ] 1
+		mem[ 1 ] 12648457
+		mem[ 2 ] 8650761
+		mem[ 3 ] 786436
+		mem[ 4 ] 25165824
+		mem[ 5 ] 10
+		mem[ 6 ] -5
 	registers:
 		reg[ 0 ] 0
-		reg[ 1 ] 3
+		reg[ 1 ] 10
+		reg[ 2 ] 0
+		reg[ 3 ] 0
+		reg[ 4 ] 0
+		reg[ 5 ] 0
+		reg[ 6 ] 0
+		reg[ 7 ] 0
+end state
+
+SW
+
+exyracr 65545 
+
+regA : 0 
+
+regB 1 
+
+offsetField  9 
+
+offsetField reg 9 
+
+ store reg value 0 
+
+instruction : 8650761
+Opcode : 2
+
+@@@
+state:
+	pc 2
+	memory:
+		mem[ 0 ] 8454149
+		mem[ 1 ] 12648457
+		mem[ 2 ] 8650761
+		mem[ 3 ] 786436
+		mem[ 4 ] 25165824
+		mem[ 5 ] 10
+		mem[ 6 ] -5
+		mem[ 7 ] 0
+		mem[ 8 ] 0
+		mem[ 9 ] 10
+	registers:
+		reg[ 0 ] 0
+		reg[ 1 ] 10
 		reg[ 2 ] 0
 		reg[ 3 ] 0
 		reg[ 4 ] 0
@@ -73,181 +112,105 @@ end state
 
 LW
 
-exyracr 131079 
+exyracr 262153 
 
 regA : 0 
 
-regB 2 
+regB 4 
 
-offsetField 7 
+offsetField 9 
 ega value 0 
 
-instruction : 21626880
-Opcode : 5
+instruction : 786436
+Opcode : 0
 
 @@@
 state:
-	pc 2
+	pc 3
 	memory:
 		mem[ 0 ] 8454149
-		mem[ 1 ] 8519687
-		mem[ 2 ] 21626880
-		mem[ 3 ] 25165824
-		mem[ 4 ] 8716295
-		mem[ 5 ] 3
-		mem[ 6 ] -1
-		mem[ 7 ] 1
+		mem[ 1 ] 12648457
+		mem[ 2 ] 8650761
+		mem[ 3 ] 786436
+		mem[ 4 ] 25165824
+		mem[ 5 ] 10
+		mem[ 6 ] -5
+		mem[ 7 ] 0
+		mem[ 8 ] 0
+		mem[ 9 ] 10
 	registers:
 		reg[ 0 ] 0
-		reg[ 1 ] 3
-		reg[ 2 ] 1
+		reg[ 1 ] 10
+		reg[ 2 ] 0
 		reg[ 3 ] 0
-		reg[ 4 ] 0
+		reg[ 4 ] 10
 		reg[ 5 ] 0
 		reg[ 6 ] 0
 		reg[ 7 ] 0
 end state
 
-JALR
+ADD
 
-exyracr 655360 
+exyracr 786436 
 
 regA 1 
 
-regB 2 
+regB 4 
 
-instruction : 8716295
-Opcode : 2
+desgReg 4 
+
+instruction : 25165824
+Opcode : 6
 
 @@@
 state:
 	pc 4
 	memory:
 		mem[ 0 ] 8454149
-		mem[ 1 ] 8519687
-		mem[ 2 ] 21626880
-		mem[ 3 ] 25165824
-		mem[ 4 ] 8716295
-		mem[ 5 ] 3
-		mem[ 6 ] -1
-		mem[ 7 ] 1
+		mem[ 1 ] 12648457
+		mem[ 2 ] 8650761
+		mem[ 3 ] 786436
+		mem[ 4 ] 25165824
+		mem[ 5 ] 10
+		mem[ 6 ] -5
+		mem[ 7 ] 0
+		mem[ 8 ] 0
+		mem[ 9 ] 10
 	registers:
 		reg[ 0 ] 0
-		reg[ 1 ] 3
-		reg[ 2 ] 3
+		reg[ 1 ] 20
+		reg[ 2 ] 0
 		reg[ 3 ] 0
-		reg[ 4 ] 0
+		reg[ 4 ] 10
 		reg[ 5 ] 0
 		reg[ 6 ] 0
 		reg[ 7 ] 0
 end state
 
-LW
-
-exyracr 327687 
-
-regA : 0 
-
-regB 5 
-
-offsetField 7 
-ega value 0 
-
-instruction : 3
-Opcode : 0
-
+break
+machine halted 
+total of 5 instructions executed final state of machine:
 @@@
 state:
 	pc 5
 	memory:
 		mem[ 0 ] 8454149
-		mem[ 1 ] 8519687
-		mem[ 2 ] 21626880
-		mem[ 3 ] 25165824
-		mem[ 4 ] 8716295
-		mem[ 5 ] 3
-		mem[ 6 ] -1
-		mem[ 7 ] 1
+		mem[ 1 ] 12648457
+		mem[ 2 ] 8650761
+		mem[ 3 ] 786436
+		mem[ 4 ] 25165824
+		mem[ 5 ] 10
+		mem[ 6 ] -5
+		mem[ 7 ] 0
+		mem[ 8 ] 0
+		mem[ 9 ] 10
 	registers:
 		reg[ 0 ] 0
-		reg[ 1 ] 3
-		reg[ 2 ] 3
+		reg[ 1 ] 0
+		reg[ 2 ] 0
 		reg[ 3 ] 0
 		reg[ 4 ] 0
-		reg[ 5 ] 1
-		reg[ 6 ] 0
-		reg[ 7 ] 0
-end state
-
-ADD
-
-exyracr 3 
-
-regA 0 
-
-regB 0 
-
-desgReg 3 
-
-instruction : -1
-Opcode : -1
-
-instruction : 1
-Opcode : 0
-
-@@@
-state:
-	pc 7
-	memory:
-		mem[ 0 ] 8454149
-		mem[ 1 ] 8519687
-		mem[ 2 ] 21626880
-		mem[ 3 ] 25165824
-		mem[ 4 ] 8716295
-		mem[ 5 ] 3
-		mem[ 6 ] -1
-		mem[ 7 ] 1
-	registers:
-		reg[ 0 ] 0
-		reg[ 1 ] 3
-		reg[ 2 ] 3
-		reg[ 3 ] 0
-		reg[ 4 ] 0
-		reg[ 5 ] 1
-		reg[ 6 ] 0
-		reg[ 7 ] 0
-end state
-
-ADD
-
-exyracr 1 
-
-regA 0 
-
-regB 0 
-
-desgReg 1 
-machine halted 
-total of 7 instructions executed final state of machine:
-@@@
-state:
-	pc 7
-	memory:
-		mem[ 0 ] 8454149
-		mem[ 1 ] 8519687
-		mem[ 2 ] 21626880
-		mem[ 3 ] 25165824
-		mem[ 4 ] 8716295
-		mem[ 5 ] 3
-		mem[ 6 ] -1
-		mem[ 7 ] 1
-	registers:
-		reg[ 0 ] 3
-		reg[ 1 ] 3
-		reg[ 2 ] 3
-		reg[ 3 ] 0
-		reg[ 4 ] 0
-		reg[ 5 ] 1
+		reg[ 5 ] 0
 		reg[ 6 ] 0
 		reg[ 7 ] 0
 end state

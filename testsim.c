@@ -136,7 +136,7 @@ void performTask(stateType *statePtr)
         {
         }
     }
-
+    clearRegisters(statePtr);
     printf("machine halted \ntotal of %d instructions executed final state of machine:", count);
     printState(statePtr);
 }
@@ -280,11 +280,16 @@ void swOp(int instruction, stateType *stateType)
     ;
     printf("\noffsetField  %d \n", offsetField);
 
-    offsetField = offsetField + stateType->reg[regB];
+    offsetField = offsetField + stateType->reg[regA];
     printf("\noffsetField reg %d \n", offsetField);
     printf("\n store reg value %d \n", stateType->reg[regA]);
 
-    stateType->reg[offsetField] = stateType->reg[regA];
+    stateType->mem[offsetField] = stateType->reg[regB];
+
+    if(offsetField >= stateType->numMemory){
+        stateType->numMemory = offsetField+1;
+    }
+
 }
 
 //utilities
