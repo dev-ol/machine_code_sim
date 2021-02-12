@@ -69,7 +69,6 @@ int main(int argc, char *argv[])
         printf("memory[%d]=%d\n", state.numMemory, state.mem[state.numMemory]);
     }
 
-    // printState(&state);
     performTask(&state);
 
     return (0);
@@ -78,7 +77,6 @@ int main(int argc, char *argv[])
 void performTask(stateType *statePtr)
 {
 
-    printf("*****testttingggg : performTask******\n");
     int i;
     int count = 0;
 
@@ -91,39 +89,32 @@ void performTask(stateType *statePtr)
 
         if (HALT == opcode)
         {
-            //statePtr->pc = i + 1;
             printState(statePtr);
-            printf("\nbreak\n");
             statePtr->pc++;
             break;
         }
         else if (ADD == opcode)
         {
-            // statePtr->pc = i + 1;
             printState(statePtr);
             addOp(statePtr->mem[i], statePtr);
         }
         else if (NAND == opcode)
         {
-            //statePtr->pc = i + 1;
             printState(statePtr);
             nandOp(statePtr->mem[i], statePtr);
         }
         else if (LW == opcode)
         {
-            // statePtr->pc = i + 1;
             printState(statePtr);
             lwOp(statePtr->mem[i], statePtr);
         }
         else if (SW == opcode)
         {
-            // statePtr->pc = i + 1;
             printState(statePtr);
             swOp(statePtr->mem[i], statePtr);
         }
         else if (BEQ == opcode)
         {
-
             printState(statePtr);
             i = beqOp(statePtr->mem[i], statePtr, i);
         }
@@ -144,91 +135,76 @@ void performTask(stateType *statePtr)
 int getOpcode(int instruction)
 {
     int opcode = 0;
-
-    printf("\ninstruction : %d\n", instruction);
     opcode = instruction >> 22;
-    printf("Opcode : %d\n", opcode);
-
+    
     return opcode;
 }
 
 void addOp(int instruction, stateType *stateType)
 {
-    printf("\nADD\n");
+    
     int extractOpcode = instruction - (ADD << 22);
-    printf("\nexyracr %d \n", extractOpcode);
-
+    
     int regA = getBytes(&extractOpcode, 19);
-    printf("\nregA %d \n", regA);
-
+    
     int regB = getBytes(&extractOpcode, 16);
-    printf("\nregB %d \n", regB);
-
+    
     int desgReg = extractOpcode;
-    printf("\ndesgReg %d \n", desgReg);
-
+    
     stateType->reg[regA] = stateType->reg[desgReg] + stateType->reg[regB];
 }
 
 void nandOp(int instruction, stateType *stateType)
 {
 
-    printf("\nNAND\n");
     int extractOpcode = instruction - (NAND << 22);
-    printf("\nexyracr %d \n", extractOpcode);
 
     int regA = getBytes(&extractOpcode, 19);
-    printf("\nregA %d \n", regA);
 
     int regB = getBytes(&extractOpcode, 16);
-    printf("\nregB %d \n", regB);
 
     int desgReg = extractOpcode;
-    printf("\ndesgReg %d \n", desgReg);
 
     stateType->reg[desgReg] = ~(stateType->reg[regA] & stateType->reg[regB]);
 }
+
+
 int jalrOp(int instruction, stateType *stateType)
 {
-   
-    printf("\nJALR\n");
-    int extractOpcode = instruction - (JALR << 22);
-    printf("\nexyracr %d \n", extractOpcode);
 
+    int extractOpcode = instruction - (JALR << 22);
+   
     int regA = getBytes(&extractOpcode, 19);
-    printf("\nregA %d \n", regA);
+    
 
     int regB = getBytes(&extractOpcode, 16);
-    printf("\nregB %d \n", regB);
-
-    
+   
     stateType->reg[regB] = stateType->pc + 1;
-    return stateType->reg[regA];
 
-    // int desgReg = extractOpcode;
-    // printf("\ndesgReg %d \n", desgReg);
-
-    //stateType->reg[desgReg] = ~(stateType->reg[regA] & stateType->reg[regB]);
+    if(regA == regB){
+     
+     stateType->reg[regA] = stateType->pc;
+        
+    }
+    
+    return stateType->reg[regA]-1;
 }
 
 void lwOp(int instruction, stateType *stateType)
 {
-    printf("\nLW\n");
+   
     int extractOpcode = instruction - (LW << 22);
-    printf("\nexyracr %d \n", extractOpcode);
+  
 
     int regA = getBytes(&extractOpcode, 19);
-    printf("\nregA : %d \n", regA);
+    
 
     int regB = getBytes(&extractOpcode, 16);
-    printf("\nregB %d \n", regB);
+    
 
     int offsetField = convertNum(extractOpcode);
-    ;
-    printf("\noffsetField %d \n", offsetField);
 
     offsetField = offsetField + stateType->reg[regA];
-    printf("\rega value %d \n", stateType->reg[regA]);
 
     int _value = stateType->mem[offsetField];
 
@@ -237,25 +213,17 @@ void lwOp(int instruction, stateType *stateType)
 
 int beqOp(int instruction, stateType *stateType, int pc)
 {
-    printf("\nBEQ\n");
-
+    
     int extractOpcode = instruction - (BEQ << 22);
-    printf("\nexyracr %d \n", extractOpcode);
-
+    
     int regA = getBytes(&extractOpcode, 19);
-    printf("\nregA : %d \n", regA);
-
+    
     int regB = getBytes(&extractOpcode, 16);
-    printf("\nregB %d \n", regB);
-
-    printf("\extractOpcode %d \n", extractOpcode);
+    
     int offsetField = convertNum(extractOpcode);
-    ;
-    printf("\noffsetField %d \n", offsetField);
-
+   
     if (stateType->reg[regA] == stateType->reg[regB])
     {
-
         return stateType->pc + offsetField;
     }
     else
@@ -266,24 +234,17 @@ int beqOp(int instruction, stateType *stateType, int pc)
 
 void swOp(int instruction, stateType *stateType)
 {
-    printf("\nSW\n");
+ 
     int extractOpcode = instruction - (SW << 22);
-    printf("\nexyracr %d \n", extractOpcode);
-
+    
     int regA = getBytes(&extractOpcode, 19);
-    printf("\nregA : %d \n", regA);
-
+    
     int regB = getBytes(&extractOpcode, 16);
-    printf("\nregB %d \n", regB);
-
+    
     int offsetField = convertNum(extractOpcode);
-    ;
-    printf("\noffsetField  %d \n", offsetField);
-
+    
     offsetField = offsetField + stateType->reg[regA];
-    printf("\noffsetField reg %d \n", offsetField);
-    printf("\n store reg value %d \n", stateType->reg[regA]);
-
+    
     stateType->mem[offsetField] = stateType->reg[regB];
 
     if(offsetField >= stateType->numMemory){
@@ -295,7 +256,6 @@ void swOp(int instruction, stateType *stateType)
 //utilities
 int getBytes(int *instruction, int shiftAmount)
 {
-
     int reg = (*instruction) >> shiftAmount;
 
     (*instruction) = (*instruction) - (reg << shiftAmount);
